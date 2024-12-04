@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { useFormStore } from '../../store/formStore';
-import { Plus, Trash2 } from 'lucide-react';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { useFormStore } from "../../store/formStore";
+import { Plus, Trash2 } from "lucide-react";
 
 export function ComprehensionContent({ question }) {
   const { updateQuestion } = useFormStore();
-  const [newOption, setNewOption] = useState('');
+  const [newOption, setNewOption] = useState("");
 
   const handlePassageChange = (e) => {
     updateQuestion(question.id, {
@@ -21,9 +21,9 @@ export function ComprehensionContent({ question }) {
         ...(question.subQuestions || []),
         {
           id: crypto.randomUUID(),
-          question: '',
+          question: "",
           options: [],
-          correctAnswer: '',
+          correctAnswer: "",
         },
       ],
     };
@@ -52,7 +52,7 @@ export function ComprehensionContent({ question }) {
       ),
     };
     updateQuestion(question.id, updatedQuestion);
-    setNewOption('');
+    setNewOption("");
   };
 
   const handleRemoveOption = (subQuestionId, optionIndex) => {
@@ -64,7 +64,9 @@ export function ComprehensionContent({ question }) {
               ...sq,
               options: sq.options.filter((_, index) => index !== optionIndex),
               correctAnswer:
-                sq.correctAnswer === sq.options[optionIndex] ? '' : sq.correctAnswer,
+                sq.correctAnswer === sq.options[optionIndex]
+                  ? ""
+                  : sq.correctAnswer,
             }
           : sq
       ),
@@ -73,15 +75,15 @@ export function ComprehensionContent({ question }) {
   };
 
   return (
-    <div className="mt-4 space-y-6">
-      <div className="space-y-2">
+    <div className="space-y-6">
+      <div>
         <label className="block text-sm font-medium text-gray-700">
           Reading Passage
         </label>
         <textarea
-          value={question.passage || ''}
+          value={question.passage || ""}
           onChange={handlePassageChange}
-          className="w-full h-32 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full h-32 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter the reading passage here..."
         />
       </div>
@@ -91,7 +93,7 @@ export function ComprehensionContent({ question }) {
           <h3 className="font-medium text-gray-700">Questions</h3>
           <button
             onClick={handleAddSubQuestion}
-            className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-1"
+            className="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center gap-1"
           >
             <Plus size={16} />
             Add Question
@@ -99,14 +101,18 @@ export function ComprehensionContent({ question }) {
         </div>
 
         {question.subQuestions?.map((subQuestion) => (
-          <div key={subQuestion.id} className="border rounded-lg p-4 space-y-4">
+          <div key={subQuestion.id} className="border rounded-md p-4 space-y-4">
             <input
               type="text"
               value={subQuestion.question}
               onChange={(e) =>
-                handleSubQuestionChange(subQuestion.id, 'question', e.target.value)
+                handleSubQuestionChange(
+                  subQuestion.id,
+                  "question",
+                  e.target.value
+                )
               }
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter question..."
             />
 
@@ -116,12 +122,12 @@ export function ComprehensionContent({ question }) {
                   type="text"
                   value={newOption}
                   onChange={(e) => setNewOption(e.target.value)}
-                  className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Add an option..."
                 />
                 <button
                   onClick={() => handleAddOption(subQuestion.id)}
-                  className="px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                  className="px-3 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
                 >
                   <Plus size={16} />
                 </button>
@@ -134,7 +140,11 @@ export function ComprehensionContent({ question }) {
                     name={`correct-${subQuestion.id}`}
                     checked={subQuestion.correctAnswer === option}
                     onChange={() =>
-                      handleSubQuestionChange(subQuestion.id, 'correctAnswer', option)
+                      handleSubQuestionChange(
+                        subQuestion.id,
+                        "correctAnswer",
+                        option
+                      )
                     }
                     className="w-4 h-4 text-blue-600"
                   />
@@ -158,7 +168,7 @@ export function ComprehensionContent({ question }) {
 ComprehensionContent.propTypes = {
   question: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['comprehension']).isRequired,
+    type: PropTypes.oneOf(["comprehension"]).isRequired,
     passage: PropTypes.string,
     subQuestions: PropTypes.arrayOf(
       PropTypes.shape({

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { useFormStore } from '../../store/formStore';
-import { Plus } from 'lucide-react';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { useFormStore } from "../../store/formStore";
+import { Plus } from "lucide-react";
 
 export function ClozeContent({ question }) {
   const { updateQuestion } = useFormStore();
-  const [text, setText] = useState(question.text || '');
-  const [selectedWord, setSelectedWord] = useState('');
+  const [text, setText] = useState(question.text || "");
+  const [selectedWord, setSelectedWord] = useState("");
 
   const handleTextChange = (e) => {
     setText(e.target.value);
@@ -26,7 +26,10 @@ export function ClozeContent({ question }) {
   const handleCreateBlank = () => {
     if (!selectedWord || !text.includes(selectedWord)) return;
 
-    const updatedText = text.replace(selectedWord, '_'.repeat(selectedWord.length));
+    const updatedText = text.replace(
+      selectedWord,
+      "_".repeat(selectedWord.length)
+    );
     const updatedBlanks = [...(question.blanks || []), selectedWord];
 
     updateQuestion(question.id, {
@@ -36,12 +39,12 @@ export function ClozeContent({ question }) {
     });
 
     setText(updatedText);
-    setSelectedWord('');
+    setSelectedWord("");
   };
 
   return (
-    <div className="mt-4 space-y-4">
-      <div className="space-y-2">
+    <div className="space-y-4">
+      <div>
         <label className="block text-sm font-medium text-gray-700">
           Text Content
         </label>
@@ -49,7 +52,7 @@ export function ClozeContent({ question }) {
           value={text}
           onChange={handleTextChange}
           onMouseUp={handleWordSelect}
-          className="w-full h-32 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full h-32 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your text here. Select words to convert them into blanks..."
         />
       </div>
@@ -61,7 +64,7 @@ export function ClozeContent({ question }) {
           </span>
           <button
             onClick={handleCreateBlank}
-            className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-1 text-sm"
+            className="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center gap-1 text-sm"
           >
             <Plus size={16} />
             Make Blank
@@ -91,7 +94,7 @@ export function ClozeContent({ question }) {
 ClozeContent.propTypes = {
   question: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['cloze']).isRequired,
+    type: PropTypes.oneOf(["cloze"]).isRequired,
     text: PropTypes.string,
     blanks: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,

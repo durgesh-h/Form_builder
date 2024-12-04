@@ -54,12 +54,12 @@ export function FormEditor() {
 
       <div className="bg-white rounded-lg shadow-md p-6">
         {/* Header and Save Button */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-6">
           <FormHeader />
           <button
             onClick={handleSave}
             disabled={saving}
-            className={`px-4 py-2 rounded-md flex items-center gap-2 ${
+            className={`w-360 sm:w-auto px-4 py-2 rounded-md flex items-center gap-2 ${
               saving
                 ? "bg-gray-300 cursor-not-allowed"
                 : "bg-gray-800 text-white hover:bg-gray-700"
