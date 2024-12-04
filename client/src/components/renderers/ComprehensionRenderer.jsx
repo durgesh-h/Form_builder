@@ -14,7 +14,7 @@ export function ComprehensionRenderer({ question, answers, setAnswers }) {
   return (
     <div className="space-y-6">
       <div className="prose max-w-none">
-        <p className="text-lg leading-relaxed bg-gradient-to-r from-yellow-100 to-pink-100 p-4 rounded-lg">
+        <p className="text-lg leading-relaxed bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 p-4 rounded-lg">
           {question.passage}
         </p>
       </div>
@@ -27,7 +27,7 @@ export function ComprehensionRenderer({ question, answers, setAnswers }) {
               {subQuestion.options.map((option, index) => (
                 <label
                   key={index}
-                  className="flex items-center  space-x-3 p-3 rounded-lg hover:bg-gradient-to-r from-yellow-100 to-pink-100 cursor-pointer"
+                  className="flex items-center  space-x-3 p-3 rounded-lg hover:bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 cursor-pointer"
                 >
                   <input
                     type="radio"

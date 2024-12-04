@@ -43,7 +43,7 @@ export function FormList() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-gradient-to-b from-gray-100 to-gray-50 min-h-screen">
+    <div className="max-w-5xl mx-auto p-6  min-h-screen">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-extrabold text-gray-800">My Forms</h1>
         <Link

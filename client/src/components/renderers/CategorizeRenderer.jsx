@@ -38,7 +38,7 @@ export function CategorizeRenderer({ question, answers, setAnswers }) {
     <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6  rounded-lg ">
         {/* Items to Categorize */}
-        <div className="bg-gradient-to-r from-yellow-100 to-pink-100 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
           <h3 className="text-lg  font-semibold text-blue-700 mb-4">
             Items to Categorize
           </h3>

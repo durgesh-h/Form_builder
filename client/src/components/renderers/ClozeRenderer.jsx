@@ -68,7 +68,7 @@ export default function ClozeRenderer({ question }) {
   const unusedWords = question.blanks.filter((word) => !answers.includes(word));
 
   return (
-    <div className="space-y-8 px-6 py-4 bg-gradient-to-r from-yellow-100 to-pink-100 ">
+    <div className="space-y-8 px-6 py-4 bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 ">
       <DndContext
         sensors={sensors}
         onDragStart={handleDragStart}
