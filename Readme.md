@@ -6,15 +6,15 @@
  <img src="https://github.com/user-attachments/assets/b63f9581-eb46-4cb6-bfd5-22f114e51326" width="500" height="150">
 </p>
 
-# 📌About the Project
+# 🔻About the Project
 
 A user-friendly Form Builder application built using the MERN stack (MongoDB, Express, React, Node.js) and Tailwind CSS. This application allows users to create forms with different types of questions, including Categorize, Cloze, and Comprehension. It supports adding images to questions, generating a form preview, and saving the form data in MongoDB.
 
-# 📌 Live Demo
+# 🔻 Live Demo
 
 - https://form-builder-six-beta.vercel.app <br>
 
-# 📌Key Functionalities
+# 🔻Key Functionalities
 
 ### 1.Form Editor UI
 
@@ -35,7 +35,7 @@ A user-friendly Form Builder application built using the MERN stack (MongoDB, Ex
 - Data Storage: All form data, including questions, answers, and user responses, are saved in MongoDB.
 - Schemas: The backend uses appropriate MongoDB schemas to structure form data and responses.
 
-# 📌What technologies were used?
+# 🔻What technologies were used?
 
 ## Frontend:
 
@@ -64,7 +64,7 @@ A user-friendly Form Builder application built using the MERN stack (MongoDB, Ex
 
 This is a [Vite.js](https://vitejs.dev) project bootstrapped with [`$create vite@latest`](https://vitejs.dev/guide/) which is a React.js tool for building Web Applications.
 
-# 📌Getting Started
+# 🔻Getting Started
 
 First, Fork this repo:
 Head over to the server directory to run the server.
