@@ -68,19 +68,19 @@ export default function ClozeRenderer({ question }) {
   const unusedWords = question.blanks.filter((word) => !answers.includes(word));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 px-6 py-4 bg-gradient-to-r from-yellow-100 to-pink-100 ">
       <DndContext
         sensors={sensors}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
         {/* Render the Question Text with Blanks */}
-        <div className="prose max-w-none">
-          <p className="text-lg leading-relaxed">{renderTextWithBlanks()}</p>
+        <div className="prose max-w-none text-xl leading-relaxed text-gray-800">
+          <p>{renderTextWithBlanks()}</p>
         </div>
 
         {/* Render Draggable Words */}
-        <div className="flex flex-wrap gap-2 p-4 bg-gray-50 rounded-lg">
+        <div className="flex flex-wrap gap-3 p-4 bg-white shadow-lg rounded-lg">
           {unusedWords.map((word) => (
             <DraggableWord key={word} id={word}>
               {word}
@@ -91,7 +91,7 @@ export default function ClozeRenderer({ question }) {
         {/* Render Drag Overlay */}
         <DragOverlay>
           {activeId && (
-            <div className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full">
+            <div className="px-4 py-2 bg-blue-200 text-blue-800 rounded-xl shadow-lg">
               {activeId}
             </div>
           )}
@@ -111,7 +111,6 @@ function DraggableWord({ id, children }) {
     transform: transform
       ? `translate3d(${transform.x}px, ${transform.y}px)`
       : undefined,
-    // position: transform ? "fixed" : "relative",
     zIndex: transform ? 1000 : "auto",
   };
 
@@ -121,7 +120,7 @@ function DraggableWord({ id, children }) {
       style={style}
       {...listeners}
       {...attributes}
-      className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full cursor-move hover:bg-blue-200 transition-colors inline-block"
+      className="px-4 py-2 bg-teal-200 text-teal-800 rounded-full cursor-move hover:bg-teal-300 transition-colors inline-block shadow-md"
     >
       {children}
     </div>
@@ -135,13 +134,13 @@ function DroppableBlank({ id, value }) {
   return (
     <span
       ref={setNodeRef}
-      className={`inline-block min-w-[100px] px-3 py-1 mx-1 border-b-2 text-center ${
+      className={`inline-block min-w-[100px] px-4 py-2 mx-2 border-b-4 text-center text-xl font-semibold transition-all ${
         isOver
-          ? "border-blue-500 bg-blue-100"
+          ? "border-blue-400 bg-blue-50"
           : value
-          ? "border-green-500 bg-green-50"
-          : "border-gray-300 bg-gray-50"
-      }`}
+          ? "border-green-400 bg-green-50"
+          : "border-gray-300 bg-gray-100"
+      } rounded-md shadow-sm`}
     >
       {value || "_____"}
     </span>

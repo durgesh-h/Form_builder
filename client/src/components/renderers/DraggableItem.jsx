@@ -18,7 +18,7 @@ export function DraggableItem({ id, children }) {
       style={style}
       {...listeners}
       {...attributes}
-      className="p-3 bg-white rounded-lg shadow-sm border border-gray-200 cursor-move hover:shadow-md transition-shadow"
+      className="p-3 bg-blue-200 rounded-lg shadow-sm border border-gray-200 cursor-move hover:shadow-md transition-shadow"
     >
       {children}
     </div>
