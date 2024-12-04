@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CategorizeRenderer } from "./renderers/CategorizeRenderer";
-import { ClozeRenderer } from "./renderers/ClozeRenderer";
+import ClozeRenderer from "./renderers/ClozeRenderer";
 import { ComprehensionRenderer } from "./renderers/ComprehensionRenderer";
 
 export function FormRenderer() {
