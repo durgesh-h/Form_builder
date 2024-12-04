@@ -1,31 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   DndContext,
   useSensor,
   useSensors,
   PointerSensor,
+  DragOverlay,
 } from "@dnd-kit/core";
-import { restrictToParentElement } from "@dnd-kit/modifiers";
+import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import { DraggableWord } from "./DraggableWord";
 import { DroppableBlank } from "./DroppableBlank";
 
 export function ClozeRenderer({ question, answers, setAnswers }) {
+  const [activeId, setActiveId] = useState(null);
   const sensors = useSensors(useSensor(PointerSensor));
+
+  const handleDragStart = (event) => {
+    setActiveId(event.active.id);
+  };
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
-    if (!over) return;
 
-    const wordIndex = active.id;
-    const blankIndex = over.id;
+    // If there's no valid target to drop
+    if (!over) {
+      setActiveId(null);
+      return;
+    }
 
-    const newBlanks = [...(answers.blanks || [])];
-    newBlanks[blankIndex] = question.blanks[wordIndex];
+    const draggedWord = active.id; // Word being dragged
+    const targetBlank = parseInt(over.id); // Target blank index
 
-    setAnswers({
-      ...answers,
-      blanks: newBlanks,
-    });
+    // Update state to assign the dragged word to the correct blank
+    if (!isNaN(targetBlank)) {
+      const updatedBlanks = [...(answers.blanks || [])];
+
+      // Check if this blank already contains a word
+      const currentWordInBlank = updatedBlanks[targetBlank];
+      if (currentWordInBlank) {
+        // Remove the word from the blanks array (to allow reuse)
+        const unusedWords = question.blanks.filter(
+          (word) => !updatedBlanks.includes(word) || word === currentWordInBlank
+        );
+
+        // Assign the dragged word to this blank
+        updatedBlanks[targetBlank] = draggedWord;
+
+        // Update the state
+        setAnswers({
+          ...answers,
+          blanks: updatedBlanks,
+        });
+      } else {
+        // Assign the dragged word directly
+        updatedBlanks[targetBlank] = draggedWord;
+        setAnswers({
+          ...answers,
+          blanks: updatedBlanks,
+        });
+      }
+    }
+
+    setActiveId(null);
   };
 
   const renderTextWithBlanks = () => {
@@ -35,8 +70,8 @@ export function ClozeRenderer({ question, answers, setAnswers }) {
         const blankIndex = Math.floor(index / 2);
         return (
           <DroppableBlank
-            key={index}
-            id={blankIndex}
+            key={blankIndex}
+            id={blankIndex.toString()} // Each blank has a unique ID
             value={answers.blanks?.[blankIndex] || ""}
           />
         );
@@ -53,7 +88,8 @@ export function ClozeRenderer({ question, answers, setAnswers }) {
     <div className="space-y-6">
       <DndContext
         sensors={sensors}
-        modifiers={[restrictToParentElement]}
+        modifiers={[restrictToWindowEdges]}
+        onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
         <div className="prose max-w-none">
@@ -62,11 +98,19 @@ export function ClozeRenderer({ question, answers, setAnswers }) {
 
         <div className="flex flex-wrap gap-2 p-4 bg-gray-50 rounded-lg">
           {unusedWords.map((word, index) => (
-            <DraggableWord key={index} id={index}>
+            <DraggableWord key={word} id={word}>
               {word}
             </DraggableWord>
           ))}
         </div>
+
+        <DragOverlay>
+          {activeId && (
+            <div className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full cursor-move">
+              {activeId}
+            </div>
+          )}
+        </DragOverlay>
       </DndContext>
     </div>
   );
