@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Save, ArrowLeft } from 'lucide-react';
-import axios from 'axios';
-import { useFormStore } from '../store/formStore';
-import { QuestionCard } from './QuestionCard';
-import { FormHeader } from './FormHeader';
-import { AddQuestionButtons } from './AddQuestionButtons';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { Save, ArrowLeft } from "lucide-react";
+import axios from "axios";
+import { useFormStore } from "../store/formStore";
+import { QuestionCard } from "./QuestionCard";
+import { FormHeader } from "./FormHeader";
+import { AddQuestionButtons } from "./AddQuestionButtons";
 
 export function FormEditor() {
   const { currentForm, setCurrentForm } = useFormStore();
@@ -15,23 +15,26 @@ export function FormEditor() {
 
   const handleSave = async () => {
     if (!currentForm.title || !currentForm.description) {
-      setError('Please provide a title and description for the form');
+      setError("Please provide a title and description for the form");
       return;
     }
 
     if (currentForm.questions.length === 0) {
-      setError('Please add at least one question to the form');
+      setError("Please add at least one question to the form");
       return;
     }
 
     try {
       setSaving(true);
       setError(null);
-      const response = await axios.post('http://localhost:5000/api/forms', currentForm);
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/forms`,
+        currentForm
+      );
       setSavedFormId(response.data._id);
       setSaving(false);
     } catch (err) {
-      setError('Failed to save form. Please try again.');
+      setError("Failed to save form. Please try again.");
       setSaving(false);
     }
   };
@@ -56,12 +59,12 @@ export function FormEditor() {
             disabled={saving}
             className={`px-4 py-2 rounded-lg flex items-center gap-2 ${
               saving
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-green-500 hover:bg-green-600'
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-500 hover:bg-green-600"
             } text-white transition-colors`}
           >
             <Save size={20} />
-            {saving ? 'Saving...' : 'Save Form'}
+            {saving ? "Saving..." : "Save Form"}
           </button>
         </div>
 
@@ -73,7 +76,7 @@ export function FormEditor() {
 
         {savedFormId && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-600 rounded-lg">
-            Form saved successfully!{' '}
+            Form saved successfully!{" "}
             <Link
               to={`/form/${savedFormId}`}
               className="text-green-700 hover:text-green-800 underline"
@@ -82,7 +85,7 @@ export function FormEditor() {
             </Link>
           </div>
         )}
-        
+
         {currentForm?.headerImage && (
           <img
             src={currentForm.headerImage}

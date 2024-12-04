@@ -3,21 +3,25 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { router as formRoutes } from "./routes/forms.js";
+import connectDB from "./config/db.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN; // Used for development & production
 
-app.use(cors());
+// Middleware
+app.use(
+  cors({
+    origin: CLIENT_ORIGIN, // Replace with your frontend domains
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
+    credentials: true, // Enable cookies, authorization headers, etc.
+  })
+);
 app.use(express.json());
 
-mongoose
-  .connect(
-    "mongodb+srv://durgeshhhio:3mgKkcgGvt8RHFog@cluster0.0e4ln.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+connectDB();
 
 app.use("/api/forms", formRoutes);
 

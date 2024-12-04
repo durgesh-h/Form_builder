@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Plus, ExternalLink, Trash2, Copy } from 'lucide-react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Plus, ExternalLink, Trash2, Copy } from "lucide-react";
+import axios from "axios";
 
 export function FormList() {
   const [forms, setForms] = useState([]);
-  const [copySuccess, setCopySuccess] = useState('');
+  const [copySuccess, setCopySuccess] = useState("");
 
   useEffect(() => {
     fetchForms();
@@ -13,19 +13,21 @@ export function FormList() {
 
   const fetchForms = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/forms');
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/forms`
+      );
       setForms(response.data);
     } catch (error) {
-      console.error('Error fetching forms:', error);
+      console.error("Error fetching forms:", error);
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/forms/${id}`);
+      await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/forms/${id}`);
       fetchForms();
     } catch (error) {
-      console.error('Error deleting form:', error);
+      console.error("Error deleting form:", error);
     }
   };
 
@@ -34,9 +36,9 @@ export function FormList() {
     try {
       await navigator.clipboard.writeText(url);
       setCopySuccess(id);
-      setTimeout(() => setCopySuccess(''), 2000);
+      setTimeout(() => setCopySuccess(""), 2000);
     } catch (err) {
-      console.error('Failed to copy:', err);
+      console.error("Failed to copy:", err);
     }
   };
 

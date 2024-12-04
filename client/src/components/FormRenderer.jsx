@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { CategorizeRenderer } from './renderers/CategorizeRenderer';
-import { ClozeRenderer } from './renderers/ClozeRenderer';
-import { ComprehensionRenderer } from './renderers/ComprehensionRenderer';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { CategorizeRenderer } from "./renderers/CategorizeRenderer";
+import { ClozeRenderer } from "./renderers/ClozeRenderer";
+import { ComprehensionRenderer } from "./renderers/ComprehensionRenderer";
 
 export function FormRenderer() {
   const { id } = useParams();
@@ -19,12 +19,14 @@ export function FormRenderer() {
 
   const fetchForm = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/forms/${id}`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/forms/${id}`
+      );
       setForm(response.data);
       initializeAnswers(response.data.questions);
       setLoading(false);
     } catch (error) {
-      setError('Failed to load form. Please try again later.');
+      setError("Failed to load form. Please try again later.");
       setLoading(false);
     }
   };
@@ -33,20 +35,20 @@ export function FormRenderer() {
     const initialAnswers = {};
     questions.forEach((question) => {
       switch (question.type) {
-        case 'categorize':
+        case "categorize":
           initialAnswers[question.id] = {
             categories: {},
           };
           break;
-        case 'cloze':
+        case "cloze":
           initialAnswers[question.id] = {
-            blanks: Array(question.blanks.length).fill(''),
+            blanks: Array(question.blanks.length).fill(""),
           };
           break;
-        case 'comprehension':
+        case "comprehension":
           initialAnswers[question.id] = {
             answers: question.subQuestions.reduce(
-              (acc, sq) => ({ ...acc, [sq.id]: '' }),
+              (acc, sq) => ({ ...acc, [sq.id]: "" }),
               {}
             ),
           };
@@ -59,12 +61,15 @@ export function FormRenderer() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/api/forms/${id}/submit`, {
-        answers,
-      });
-      navigate('/success');
+      await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/forms/${id}/submit`,
+        {
+          answers,
+        }
+      );
+      navigate("/success");
     } catch (error) {
-      setError('Failed to submit form. Please try again.');
+      setError("Failed to submit form. Please try again.");
     }
   };
 
@@ -112,7 +117,7 @@ export function FormRenderer() {
                 />
               )}
 
-              {question.type === 'categorize' && (
+              {question.type === "categorize" && (
                 <CategorizeRenderer
                   question={question}
                   answers={answers[question.id]}
@@ -121,7 +126,7 @@ export function FormRenderer() {
                   }
                 />
               )}
-              {question.type === 'cloze' && (
+              {question.type === "cloze" && (
                 <ClozeRenderer
                   question={question}
                   answers={answers[question.id]}
@@ -130,7 +135,7 @@ export function FormRenderer() {
                   }
                 />
               )}
-              {question.type === 'comprehension' && (
+              {question.type === "comprehension" && (
                 <ComprehensionRenderer
                   question={question}
                   answers={answers[question.id]}
