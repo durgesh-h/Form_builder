@@ -92,31 +92,39 @@ export function FormRenderer() {
   if (!form) return null;
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h1 className="text-2xl font-bold mb-2">{form.title}</h1>
-        <p className="text-gray-600 mb-6">{form.description}</p>
+    <div className="max-w-5xl mx-auto p-8 bg-gray-100 min-h-screen">
+      <div className="bg-white rounded-2xl shadow-lg p-8 space-y-8">
+        <h1 className="text-3xl font-extrabold text-gray-800 mb-4">
+          {form.title}
+        </h1>
+        <p className="text-gray-600 text-lg">{form.description}</p>
 
         {form.headerImage && (
           <img
             src={form.headerImage}
             alt="Form header"
-            className="w-full h-48 object-cover rounded-lg mb-6"
+            className="w-full h-56 object-cover rounded-lg shadow-md mb-6"
           />
         )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {form.questions.map((question) => (
-            <div key={question.id} className="border rounded-lg p-6">
-              <h2 className="text-xl font-semibold mb-4">{question.title}</h2>
+            <div
+              key={question.id}
+              className="border rounded-lg shadow-sm hover:shadow-md transition-shadow p-6 bg-gray-50"
+            >
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                {question.title}
+              </h2>
               {question.imageUrl && (
                 <img
                   src={question.imageUrl}
                   alt="Question"
-                  className="w-full h-32 object-cover rounded-lg mb-4"
+                  className="w-full h-40 object-cover rounded-lg shadow-sm mb-4"
                 />
               )}
 
+              {/* Conditional Renderers */}
               {question.type === "categorize" && (
                 <CategorizeRenderer
                   question={question}
@@ -149,7 +157,7 @@ export function FormRenderer() {
 
           <button
             type="submit"
-            className="w-full px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-semibold transition-colors"
+            className="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition-all"
           >
             Submit
           </button>

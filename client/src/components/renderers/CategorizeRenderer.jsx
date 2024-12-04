@@ -36,15 +36,21 @@ export function CategorizeRenderer({ question, answers, setAnswers }) {
 
   return (
     <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded-lg shadow-md">
         {/* Items to Categorize */}
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <h3 className="font-semibold mb-4">Items to Categorize</h3>
-          <div className="space-y-2">
+        <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            Items to Categorize
+          </h3>
+          <div className="space-y-3">
             {question.items
               .filter((item) => !getItemCategory(item.id))
               .map((item) => (
-                <DraggableItem key={item.id} id={item.id}>
+                <DraggableItem
+                  key={item.id}
+                  id={item.id}
+                  className="bg-gray-100 p-3 rounded-md shadow-sm hover:bg-gray-200"
+                >
                   {item.content}
                 </DraggableItem>
               ))}
@@ -52,7 +58,7 @@ export function CategorizeRenderer({ question, answers, setAnswers }) {
         </div>
 
         {/* Categories */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           {question.categories.map((category) => (
             <DroppableCategory
               key={category}
@@ -61,6 +67,7 @@ export function CategorizeRenderer({ question, answers, setAnswers }) {
               items={question.items.filter(
                 (item) => getItemCategory(item.id) === category
               )}
+              className="bg-white p-4 rounded-lg shadow-md"
             />
           ))}
         </div>
