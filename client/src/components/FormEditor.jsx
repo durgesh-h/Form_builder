@@ -73,7 +73,8 @@ export function FormEditor() {
         {/* Error Message */}
         {error && (
           <div className="mb-4 p-3 border border-red-300 text-red-600 rounded-md">
-            {error}
+            {error} or Reduce images size!
+            <p className="text-xs">If form not saved.. save without images!</p>
           </div>
         )}
 
