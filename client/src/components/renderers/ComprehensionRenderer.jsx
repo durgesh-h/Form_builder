@@ -32,6 +32,7 @@ export function ComprehensionRenderer({ question, answers, setAnswers }) {
                   <input
                     type="radio"
                     name={`question-${subQuestion.id}`}
+                    required
                     value={option}
                     checked={answers.answers[subQuestion.id] === option}
                     onChange={() => handleAnswerChange(subQuestion.id, option)}
